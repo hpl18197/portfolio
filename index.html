@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="个人作品集网站，展示大疆、极飞、影石三个项目方向。">
+  <link rel="icon" href="data:,">
+  <title>个人作品集 | 大疆 · 极飞 · 影石</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="assets/lucide.min.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header" id="top">
+    <a class="brand" href="#top" aria-label="返回顶部">
+      <span class="brand-mark" aria-hidden="true">P</span>
+      <span class="brand-name">个人作品集</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="打开导航" aria-expanded="false">
+      <i data-lucide="menu" class="icon-menu" aria-hidden="true"></i>
+      <i data-lucide="x" class="icon-close" aria-hidden="true"></i>
+    </button>
+    <nav class="site-nav" id="primaryNav" aria-label="主导航">
+      <a href="#projects">项目</a>
+      <a href="#about">关于</a>
+      <a href="#contact">联系</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro section" aria-labelledby="introTitle">
+      <div class="intro-copy">
+        <p class="eyebrow">个人作品集 · 2026</p>
+        <h1 id="introTitle">大疆、极飞、影石<br><span>项目精选</span></h1>
+        <p class="intro-text">围绕无人机、农业科技与全景影像三个方向，把复杂技术变成清晰、可信、可体验的作品。</p>
+        <div class="intro-actions">
+          <a class="btn btn-primary" href="#projects">
+            查看项目
+            <i data-lucide="arrow-down" aria-hidden="true"></i>
+          </a>
+          <a class="btn btn-ghost" href="#contact">
+            联系合作
+            <i data-lucide="mail" aria-hidden="true"></i>
+          </a>
+        </div>
+        <dl class="intro-meta">
+          <div>
+            <dt>项目方向</dt>
+            <dd>3 个</dd>
+          </div>
+          <div>
+            <dt>合作品牌</dt>
+            <dd>3 个</dd>
+          </div>
+          <div>
+            <dt>作品档案</dt>
+            <dd>持续更新</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="intro-visual" aria-label="项目预览">
+        <div class="preview-grid">
+          <figure class="preview-item preview-large">
+            <img src="assets/dji-mavic3.png" alt="大疆航拍无人机产品图">
+            <figcaption><span>01</span>大疆</figcaption>
+          </figure>
+          <figure class="preview-item">
+            <img src="assets/xag-p100-spray.jpg" alt="极飞农业无人机在田间作业">
+            <figcaption><span>02</span>极飞</figcaption>
+          </figure>
+          <figure class="preview-item">
+            <img src="assets/insta-x4-buy.jpg" alt="影石全景相机产品与场景图">
+            <figcaption><span>03</span>影石</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects section" id="projects" aria-labelledby="projectsTitle">
+      <div class="section-heading">
+        <p class="eyebrow">Selected Work</p>
+        <h2 id="projectsTitle">项目精选</h2>
+        <p>三个项目从不同角度呈现产品理解、内容表达与场景落地。</p>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card" data-project="dji">
+          <div class="project-media">
+            <img src="assets/dji-mavic3.png" alt="大疆航拍无人机产品图">
+            <span class="project-index">01</span>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="brand-tag brand-dji">DJI</span>
+              <span>无人机 · 影像</span>
+            </div>
+            <h3>大疆航拍影像项目</h3>
+            <p>围绕旗舰航拍无人机的产品内容、拍摄体验与影像表达，梳理从创作灵感到成片输出的完整链路。</p>
+            <ul class="project-points">
+              <li>产品内容与体验表达</li>
+              <li>航拍场景与创作流程</li>
+              <li>影像语言与视觉规范</li>
+            </ul>
+            <div class="tag-row" aria-label="项目标签">
+              <span>产品体验</span>
+              <span>内容策划</span>
+              <span>无人机</span>
+            </div>
+            <button class="project-open" data-modal="modal-dji">
+              查看项目详情
+              <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </article>
+
+        <article class="project-card" data-project="xag">
+          <div class="project-media">
+            <img src="assets/xag-p100-spray.jpg" alt="极飞农业无人机在田间作业">
+            <span class="project-index">02</span>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="brand-tag brand-xag">XAG</span>
+              <span>农业科技 · 场景</span>
+            </div>
+            <h3>极飞智慧农业项目</h3>
+            <p>面向农业无人机的精准作业场景，关注产品传播、田间叙事和智慧农业的落地表达。</p>
+            <ul class="project-points">
+              <li>产品传播与场景叙事</li>
+              <li>田间作业与用户流程</li>
+              <li>农业科技内容体系</li>
+            </ul>
+            <div class="tag-row" aria-label="项目标签">
+              <span>农业科技</span>
+              <span>场景叙事</span>
+              <span>产品传播</span>
+            </div>
+            <button class="project-open" data-modal="modal-xag">
+              查看项目详情
+              <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </article>
+
+        <article class="project-card" data-project="insta">
+          <div class="project-media">
+            <img src="assets/insta-x4-buy.jpg" alt="影石全景相机产品与场景图">
+            <span class="project-index">03</span>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="brand-tag brand-insta">Insta360</span>
+              <span>全景影像 · 内容</span>
+            </div>
+            <h3>影石全景影像项目</h3>
+            <p>以全景相机为核心，探索运动、旅行与内容创作中的沉浸式影像表达和新型视角。</p>
+            <ul class="project-points">
+              <li>全景影像与内容创意</li>
+              <li>运动场景与用户表达</li>
+              <li>内容策划与视觉规范</li>
+            </ul>
+            <div class="tag-row" aria-label="项目标签">
+              <span>全景影像</span>
+              <span>内容创作</span>
+              <span>运动场景</span>
+            </div>
+            <button class="project-open" data-modal="modal-insta">
+              查看项目详情
+              <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-band" id="about" aria-labelledby="aboutTitle">
+      <div class="about section">
+        <div class="about-copy">
+          <p class="eyebrow eyebrow-light">About</p>
+          <h2 id="aboutTitle">以项目为中心，<br>连接产品与表达。</h2>
+          <p>我关注硬件产品、影像技术和内容体验之间的连接，也重视场景研究、表达规范和最终落地效果。</p>
+          <a class="btn btn-light" href="#contact">
+            开始合作
+            <i data-lucide="arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="about-process" aria-label="工作方式">
+          <article>
+            <span>01</span>
+            <h3>理解产品</h3>
+            <p>先拆解产品能力、用户场景和内容边界，再建立清晰的项目表达。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>构建叙事</h3>
+            <p>把技术语言转译成用户能感知的体验、画面和故事。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>验证体验</h3>
+            <p>通过真实场景、反馈和内容复盘，持续修正表达方向。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>产出归档</h3>
+            <p>把项目成果整理成可复用、可传播的作品档案。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact section" id="contact" aria-labelledby="contactTitle">
+      <div class="contact-inner">
+        <p class="eyebrow">Contact</p>
+        <h2 id="contactTitle">联系与合作</h2>
+        <p>如需项目资料或合作沟通，可以发送邮件到以下地址。</p>
+        <a class="contact-email" href="mailto:hello@example.com">hello@example.com</a>
+        <a class="btn btn-primary" href="mailto:hello@example.com">
+          发送邮件
+          <i data-lucide="send" aria-hidden="true"></i>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 个人作品集 · 大疆 / 极飞 / 影石</p>
+  </footer>
+
+  <dialog class="project-modal" id="modal-dji" aria-labelledby="modalDjiTitle">
+    <div class="modal-shell">
+      <button class="modal-close" aria-label="关闭详情">
+        <i data-lucide="x" aria-hidden="true"></i>
+      </button>
+      <img src="assets/dji-mavic3.png" alt="大疆航拍无人机产品图">
+      <div class="modal-content">
+        <div class="modal-meta">
+          <span class="brand-tag brand-dji">DJI</span>
+          <span>无人机 · 影像</span>
+        </div>
+        <h3 id="modalDjiTitle">大疆航拍影像项目</h3>
+        <p>项目围绕航拍无人机展开，重点研究产品内容、拍摄体验与影像表达之间的关系，让复杂功能更容易被创作者理解和使用。</p>
+        <div class="modal-columns">
+          <div>
+            <h4>关键方向</h4>
+            <ul>
+              <li>产品内容与功能表达</li>
+              <li>航拍创作流程梳理</li>
+              <li>影像语言与视觉规范</li>
+              <li>多场景内容规划</li>
+            </ul>
+          </div>
+          <div>
+            <h4>能力体现</h4>
+            <ul>
+              <li>产品理解</li>
+              <li>内容策划</li>
+              <li>场景研究</li>
+              <li>视觉表达</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="project-modal" id="modal-xag" aria-labelledby="modalXagTitle">
+    <div class="modal-shell">
+      <button class="modal-close" aria-label="关闭详情">
+        <i data-lucide="x" aria-hidden="true"></i>
+      </button>
+      <img src="assets/xag-p100-spray.jpg" alt="极飞农业无人机在田间作业">
+      <div class="modal-content">
+        <div class="modal-meta">
+          <span class="brand-tag brand-xag">XAG</span>
+          <span>农业科技 · 场景</span>
+        </div>
+        <h3 id="modalXagTitle">极飞智慧农业项目</h3>
+        <p>项目面向农业无人机与智慧农业场景，关注产品传播、田间叙事和用户理解，让科技价值在真实作业环境中清晰可见。</p>
+        <div class="modal-columns">
+          <div>
+            <h4>关键方向</h4>
+            <ul>
+              <li>产品传播与场景叙事</li>
+              <li>田间作业流程梳理</li>
+              <li>农业科技内容体系</li>
+              <li>用户故事与案例表达</li>
+            </ul>
+          </div>
+          <div>
+            <h4>能力体现</h4>
+            <ul>
+              <li>行业理解</li>
+              <li>场景调研</li>
+              <li>内容策划</li>
+              <li>跨团队协作</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="project-modal" id="modal-insta" aria-labelledby="modalInstaTitle">
+    <div class="modal-shell">
+      <button class="modal-close" aria-label="关闭详情">
+        <i data-lucide="x" aria-hidden="true"></i>
+      </button>
+      <img src="assets/insta-x4-buy.jpg" alt="影石全景相机产品与场景图">
+      <div class="modal-content">
+        <div class="modal-meta">
+          <span class="brand-tag brand-insta">Insta360</span>
+          <span>全景影像 · 内容</span>
+        </div>
+        <h3 id="modalInstaTitle">影石全景影像项目</h3>
+        <p>项目以全景相机为核心，探索运动、旅行与内容创作中的沉浸式影像表达，让用户更容易发现全景影像的新视角。</p>
+        <div class="modal-columns">
+          <div>
+            <h4>关键方向</h4>
+            <ul>
+              <li>全景影像与内容创意</li>
+              <li>运动场景内容规划</li>
+              <li>用户视角与叙事表达</li>
+              <li>视觉规范与素材整理</li>
+            </ul>
+          </div>
+          <div>
+            <h4>能力体现</h4>
+            <ul>
+              <li>影像理解</li>
+              <li>内容策划</li>
+              <li>用户洞察</li>
+              <li>视觉表达</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>
