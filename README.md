@@ -1,23 +1,32 @@
-# 个人作品集
+# 作品集档案
 
-这是一个可直接部署到 GitHub Pages 的静态作品集网站。
+大疆、极飞、影石个人作品集网站，已部署到 GitHub Pages。
 
-## 网页上传方式
+- 正式网址：https://hpl18197.github.io/portfolio/
+- 代码仓库：https://github.com/hpl18197/portfolio
 
-1. 登录 GitHub，新建一个名为 `portfolio` 的公开仓库。
-2. 在仓库页面选择上传文件，把本目录下的 `index.html`、`styles.css`、`script.js`、`assets` 文件夹上传进去。
-3. 进入仓库 Settings，打开 Pages。
-4. 在 Build and deployment 中选择 `Deploy from a branch`。
-5. 分支选择 `main`，目录选择 `/ (root)`，点击 Save。
-6. 等待 1 到 3 分钟，访问 `https://hpl18197.github.io/portfolio/`。
+## 页面内容
 
-## 命令行方式
+- 三个项目方向：大疆航拍影像、极飞智慧农业、影石全景影像
+- 产品档案：DJI Mavic 4 Pro、XAG P100 Pro 2023、Insta360 X5
+- 官方素材画廊：200 张图片，支持按品牌筛选
+- 联系方式：邮箱、电话、地址
+
+## 本地预览
 
 ```bash
 cd outputs/portfolio
-git remote add origin https://github.com/hpl18197/portfolio.git
-git branch -M main
-git push -u origin main
+python -m http.server 8000
 ```
 
-推送后在仓库 Settings 的 Pages 中按上面的方式启用即可。
+打开 http://localhost:8000 即可预览。
+
+## GitHub Pages 部署
+
+```bash
+git add .
+git commit -m "Update portfolio"
+git push origin main
+```
+
+推送后，仓库 Settings 中的 Pages 使用 `main` 分支的根目录构建。
