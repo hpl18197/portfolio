@@ -6,6 +6,9 @@ const galleryStatus = document.getElementById("galleryStatus");
 const loadMore = document.getElementById("loadMore");
 const filterButtons = document.querySelectorAll(".filter-btn");
 const specGrid = document.querySelector(".spec-grid");
+const specEmpty = document.getElementById("specEmpty");
+const heroSearch = document.getElementById("heroSearch");
+const heroSearchBtn = document.getElementById("heroSearchBtn");
 const heroProductCount = document.querySelectorAll(".hero-metrics strong")[2];
 const specHeadingNote = document.querySelector(".spec-heading p");
 
@@ -363,7 +366,7 @@ function renderProductCatalog(catalog) {
     `).join("");
     const detailUrl = `product-view.html?product=${encodeURIComponent(product.id)}`;
     return `
-      <article class="spec-card" data-product="${escapeHtml(product.id)}" data-tilt>
+      <article class="spec-card" data-product="${escapeHtml(product.id)}" data-brand="${escapeHtml(product.brand)}" data-name="${escapeHtml(product.name)}" data-search="${escapeHtml([product.name, product.brand, product.category, ...(product.specs || []).map((s) => `${s.label} ${s.value}`)].join(" "))}" data-tilt>
         <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)} 官方产品图">
         <div class="spec-content">
           <div class="spec-meta">
@@ -391,6 +394,53 @@ function renderProductCatalog(catalog) {
     window.HVEFFECTS.animateCounters(document.querySelector(".hero-metrics"));
   }
   if (window.lucide) lucide.createIcons();
+}
+
+function applyHeroSearch() {
+  const query = (heroSearch?.value || "").trim().toLowerCase();
+  const cards = [...(specGrid?.querySelectorAll(".spec-card") || [])];
+  let visible = 0;
+  cards.forEach((card) => {
+    const searchText = [card.dataset.name, card.dataset.brand, card.dataset.search].join(" ").toLowerCase();
+    const matched = !query || searchText.includes(query);
+    card.hidden = !matched;
+    if (matched) visible += 1;
+  });
+  if (specEmpty) specEmpty.hidden = visible !== 0;
+}
+
+function initHeroSearch() {
+  if (!heroSearch || !specGrid) return;
+  heroSearch.addEventListener("input", () => {
+    document.querySelectorAll(".hero-quick button").forEach((button) => button.classList.remove("is-active"));
+    applyHeroSearch();
+  });
+  heroSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("specs")?.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+  if (heroSearchBtn) {
+    heroSearchBtn.addEventListener("click", () => {
+      document.getElementById("specs")?.scrollIntoView({ behavior: "smooth" });
+    });
+  }
+  document.querySelectorAll(".hero-quick button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const brand = button.dataset.brandFilter || "";
+      document.querySelectorAll(".hero-quick button").forEach((item) => item.classList.toggle("is-active", item === button));
+      if (heroSearch) heroSearch.value = "";
+      const cards = [...specGrid.querySelectorAll(".spec-card")];
+      let visible = 0;
+      cards.forEach((card) => {
+        const matched = !brand || card.dataset.brand === brand;
+        card.hidden = !matched;
+        if (matched) visible += 1;
+      });
+      if (specEmpty) specEmpty.hidden = visible !== 0;
+    });
+  });
 }
 
 async function initProductCatalog() {
@@ -427,6 +477,7 @@ if (window.HVEFFECTS) {
   window.HVEFFECTS.observeReveal(document.body);
   window.HVEFFECTS.initBackToTop();
 }
+initHeroSearch();
 
 if (window.lucide) {
   lucide.createIcons();

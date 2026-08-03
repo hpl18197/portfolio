@@ -38,6 +38,18 @@
         <p class="eyebrow hero-eyebrow">Vision Field · 2026</p>
         <h1 id="heroTitle">航野视界<br><span>科技影像与智慧农业项目档案</span></h1>
         <p class="hero-lead">从航拍无人机到田间作业，再到全景影像，把产品参数、现场素材和内容表达沉淀为完整的个人作品集。</p>
+        <div class="hero-search" role="search">
+          <i data-lucide="search" aria-hidden="true"></i>
+          <input id="heroSearch" type="search" placeholder="查找产品、品牌或参数..." aria-label="查找产品">
+          <button id="heroSearchBtn" type="button">查找</button>
+        </div>
+        <div class="hero-quick" aria-label="快速筛选">
+          <span>快速筛选</span>
+          <button type="button" data-brand-filter="DJI">DJI</button>
+          <button type="button" data-brand-filter="XAG">XAG</button>
+          <button type="button" data-brand-filter="Insta360">Insta360</button>
+          <button type="button" data-brand-filter="">全部</button>
+        </div>
         <div class="hero-actions">
           <a class="btn btn-light" href="#specs">
             查看产品档案
@@ -158,7 +170,7 @@
           <p>19 款核心产品档案，参数与价格来自官方公开页面，可能存在更新；极飞采用按配置方案询价制。</p>
         </div>
 
-        <div class="spec-grid">
+        <div class="spec-grid" id="specGrid">
           <article class="spec-card" data-product="dji">
             <img src="assets/gallery/dji-002.jpg" alt="大疆 Mavic 4 Pro 官方参数图">
             <div class="spec-content">
@@ -672,6 +684,7 @@
             </div>
           </article>
         </div>
+        <p class="spec-empty" id="specEmpty" hidden>没有找到匹配产品，试试其他关键词。</p>
       </div>
     </section>
 

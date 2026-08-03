@@ -479,6 +479,96 @@ textarea:focus {
   background: #9f3d2c;
 }
 
+/* Final Kimi-inspired admin overrides */
+.admin-body {
+  background: #fbfaf9;
+}
+
+.admin-header {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.admin-badge {
+  border-radius: 999px;
+  background: #0d0d0d;
+  color: #fff;
+}
+
+.admin-panel,
+.admin-dialog,
+.admin-row,
+.admin-stats div,
+.admin-upload,
+.admin-spec-editor,
+input,
+select,
+textarea {
+  border-radius: 12px;
+}
+
+.admin-connect {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.admin-connect .eyebrow,
+.admin-connect-copy p:last-child,
+.admin-connect-form label span,
+.admin-connect-status {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.admin-connect h1,
+.admin-overview h2,
+.admin-dialog h2 {
+  color: rgba(0, 0, 0, 0.9);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-weight: 700;
+}
+
+.admin-connect-form input {
+  border-color: rgba(0, 0, 0, 0.13);
+  background: #fbfaf9;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.admin-connect-form input::placeholder {
+  color: rgba(0, 0, 0, 0.34);
+}
+
+.admin-btn-primary {
+  border-color: #0d0d0d;
+  background: #0d0d0d;
+  color: #fff;
+}
+
+.admin-btn-primary:hover {
+  border-color: #1772f6;
+  background: #1772f6;
+  color: #fff;
+}
+
+.admin-status.is-active {
+  background: #e8f4ee;
+  color: #15804a;
+}
+
+.admin-status.is-hidden {
+  background: #f6eeee;
+  color: #9a4a3d;
+}
+
+.admin-dialog {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.admin-toast {
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.9);
+}
+
 @media (max-width: 960px) {
   .admin-connect,
   .admin-overview-head {
@@ -746,6 +836,102 @@ textarea:focus {
   }
 }
 
+/* Kimi-inspired admin */
+.admin-body {
+  background: #fbfaf9;
+}
+
+.admin-header {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.admin-badge {
+  border-radius: 999px;
+  background: #0d0d0d;
+  color: #fff;
+}
+
+.admin-panel,
+.admin-dialog {
+  border-radius: 16px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.05);
+}
+
+.admin-connect {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.admin-connect .eyebrow,
+.admin-connect-copy p:last-child,
+.admin-connect-form label span,
+.admin-connect-status {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.admin-connect h1,
+.admin-overview h2,
+.admin-dialog h2 {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.admin-connect-form input {
+  border-color: rgba(0, 0, 0, 0.13);
+  background: #fbfaf9;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.admin-connect-form input::placeholder {
+  color: rgba(0, 0, 0, 0.34);
+}
+
+input,
+select,
+textarea {
+  border-radius: 10px;
+}
+
+.admin-btn,
+.admin-row,
+.admin-stats div,
+.admin-upload,
+.admin-spec-editor {
+  border-radius: 12px;
+}
+
+.admin-btn-primary {
+  border-color: #0d0d0d;
+  background: #0d0d0d;
+  color: #fff;
+}
+
+.admin-btn-primary:hover {
+  border-color: #1772f6;
+  background: #1772f6;
+  color: #fff;
+}
+
+.admin-status.is-active {
+  background: #e8f4ee;
+  color: #15804a;
+}
+
+.admin-status.is-hidden {
+  background: #f6eeee;
+  color: #9a4a3d;
+}
+
+.admin-dialog {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.admin-toast {
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.9);
+}
+
 /* Editorial archive theme */
 .admin-body {
   background: #f1f3ef;
@@ -831,4 +1017,94 @@ textarea {
 
 .admin-toast.is-error {
   background: #9f3d2c;
+}
+
+/* Final Kimi-inspired admin overrides */
+.admin-body {
+  background: #fbfaf9;
+}
+
+.admin-header {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.admin-badge {
+  border-radius: 999px;
+  background: #0d0d0d;
+  color: #fff;
+}
+
+.admin-panel,
+.admin-dialog,
+.admin-row,
+.admin-stats div,
+.admin-upload,
+.admin-spec-editor,
+input,
+select,
+textarea {
+  border-radius: 12px;
+}
+
+.admin-connect {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.admin-connect .eyebrow,
+.admin-connect-copy p:last-child,
+.admin-connect-form label span,
+.admin-connect-status {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.admin-connect h1,
+.admin-overview h2,
+.admin-dialog h2 {
+  color: rgba(0, 0, 0, 0.9);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-weight: 700;
+}
+
+.admin-connect-form input {
+  border-color: rgba(0, 0, 0, 0.13);
+  background: #fbfaf9;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.admin-connect-form input::placeholder {
+  color: rgba(0, 0, 0, 0.34);
+}
+
+.admin-btn-primary {
+  border-color: #0d0d0d;
+  background: #0d0d0d;
+  color: #fff;
+}
+
+.admin-btn-primary:hover {
+  border-color: #1772f6;
+  background: #1772f6;
+  color: #fff;
+}
+
+.admin-status.is-active {
+  background: #e8f4ee;
+  color: #15804a;
+}
+
+.admin-status.is-hidden {
+  background: #f6eeee;
+  color: #9a4a3d;
+}
+
+.admin-dialog {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.admin-toast {
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.9);
 }
