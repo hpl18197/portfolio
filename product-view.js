@@ -50,6 +50,7 @@ async function loadProduct() {
     catalog = await response.json();
   } catch (error) {
     main.innerHTML = notFound;
+    if (window.HVEFFECTS) window.HVEFFECTS.initBackToTop();
     if (window.lucide) lucide.createIcons();
     return;
   }
@@ -57,6 +58,7 @@ async function loadProduct() {
   const product = catalog.find((item) => item.id === productId);
   if (!product || (!product.active && !isPreview)) {
     main.innerHTML = notFound;
+    if (window.HVEFFECTS) window.HVEFFECTS.initBackToTop();
     if (window.lucide) lucide.createIcons();
     return;
   }
@@ -109,6 +111,10 @@ async function loadProduct() {
     </figure>
   `).join("");
 
+  if (window.HVEFFECTS) {
+    window.HVEFFECTS.observeReveal(document.body);
+    window.HVEFFECTS.initBackToTop();
+  }
   if (window.lucide) lucide.createIcons();
 }
 

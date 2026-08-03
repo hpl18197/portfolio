@@ -68,6 +68,9 @@ function renderGallery() {
 
   galleryStatus.textContent = `已载入 ${Math.min(visibleCount, items.length)} / ${items.length} 张`;
   loadMore.style.display = visibleCount < items.length ? "" : "none";
+  if (window.HVEFFECTS) {
+    window.HVEFFECTS.observeReveal(galleryGrid);
+  }
 }
 
 filterButtons.forEach((button) => {
@@ -360,7 +363,7 @@ function renderProductCatalog(catalog) {
     `).join("");
     const detailUrl = `product-view.html?product=${encodeURIComponent(product.id)}`;
     return `
-      <article class="spec-card" data-product="${escapeHtml(product.id)}">
+      <article class="spec-card" data-product="${escapeHtml(product.id)}" data-tilt>
         <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)} 官方产品图">
         <div class="spec-content">
           <div class="spec-meta">
@@ -382,6 +385,11 @@ function renderProductCatalog(catalog) {
 
   if (heroProductCount) heroProductCount.textContent = String(activeProducts.length);
   if (specHeadingNote) specHeadingNote.textContent = `${activeProducts.length} 款核心产品档案，参数与价格来自官方公开页面，可能存在更新；极飞采用按配置方案询价制。`;
+  if (window.HVEFFECTS) {
+    window.HVEFFECTS.observeReveal(specGrid);
+    window.HVEFFECTS.initTilt(specGrid, "[data-tilt]");
+    window.HVEFFECTS.animateCounters(document.querySelector(".hero-metrics"));
+  }
   if (window.lucide) lucide.createIcons();
 }
 
@@ -415,6 +423,10 @@ document.addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 initGallery();
 initProductCatalog();
+if (window.HVEFFECTS) {
+  window.HVEFFECTS.observeReveal(document.body);
+  window.HVEFFECTS.initBackToTop();
+}
 
 if (window.lucide) {
   lucide.createIcons();

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="admin.css">
   <script src="assets/lucide.min.js"></script>
+  <script src="assets/effects.js" defer></script>
   <script src="admin.js" defer></script>
 </head>
 <body class="admin-body">
@@ -74,9 +75,9 @@
       </div>
 
       <div class="admin-stats">
-        <div><strong id="statTotal">0</strong><span>全部产品</span></div>
-        <div><strong id="statActive">0</strong><span>已上架</span></div>
-        <div><strong id="statHidden">0</strong><span>已下架</span></div>
+        <div><strong id="statTotal" data-count="0">0</strong><span>全部产品</span></div>
+        <div><strong id="statActive" data-count="0">0</strong><span>已上架</span></div>
+        <div><strong id="statHidden" data-count="0">0</strong><span>已下架</span></div>
       </div>
 
       <div class="admin-list" id="productList"></div>

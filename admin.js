@@ -143,12 +143,16 @@ async function saveCatalog(message) {
 
 function renderStats() {
   const active = state.catalog.filter((item) => item.active !== false).length;
-  $("statTotal").textContent = String(state.catalog.length);
-  $("statActive").textContent = String(active);
-  $("statHidden").textContent = String(state.catalog.length - active);
+  $("statTotal").textContent = "0";
+  $("statTotal").dataset.count = String(state.catalog.length);
+  $("statActive").textContent = "0";
+  $("statActive").dataset.count = String(active);
+  $("statHidden").textContent = "0";
+  $("statHidden").dataset.count = String(state.catalog.length - active);
   $("adminMeta").textContent = state.token
     ? `已连接 ${state.repo}，保存后会自动发布到 GitHub Pages。`
     : "未连接仓库，当前显示本地产品档案。";
+  if (window.HVEFFECTS) window.HVEFFECTS.animateCounters(document.querySelector(".admin-stats"));
 }
 
 function renderList() {
@@ -172,13 +176,13 @@ function renderList() {
     return;
   }
 
-  list.innerHTML = items.map((product) => {
+  list.innerHTML = items.map((product, index) => {
     const statusClass = product.active === false ? "is-hidden" : "is-active";
     const statusText = product.active === false ? "已下架" : "已上架";
     const toggleText = product.active === false ? "上架" : "下架";
     const toggleAction = product.active === false ? "publish" : "unpublish";
     return `
-      <article class="admin-row">
+      <article class="admin-row" style="--i:${index}">
         <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)} 产品图">
         <div class="admin-product-info">
           <div class="admin-product-title">
@@ -202,6 +206,7 @@ function renderList() {
     `;
   }).join("");
 
+  if (window.HVEFFECTS) window.HVEFFECTS.observeReveal(list);
   if (window.lucide) lucide.createIcons();
 }
 
@@ -493,6 +498,7 @@ function init() {
     if (action === "delete") deleteProduct(id);
   });
   loadLocalCatalog();
+  if (window.HVEFFECTS) window.HVEFFECTS.observeReveal(document.body);
   if (window.lucide) lucide.createIcons();
 }
 

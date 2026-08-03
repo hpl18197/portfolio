@@ -8,6 +8,7 @@
   <title>航野视界 | 大疆 · 极飞 · 影石</title>
   <link rel="stylesheet" href="styles.css">
   <script src="assets/lucide.min.js"></script>
+  <script src="assets/effects.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -49,15 +50,15 @@
         </div>
         <div class="hero-metrics" aria-label="航野视界概览">
           <div>
-            <strong>03</strong>
+            <strong data-count="3" data-pad="2">03</strong>
             <span>项目方向</span>
           </div>
           <div>
-            <strong>200</strong>
+            <strong data-count="200">200</strong>
             <span>官方图库素材</span>
           </div>
           <div>
-            <strong id="heroProductCount">19</strong>
+            <strong id="heroProductCount" data-count="19">19</strong>
             <span>产品档案</span>
           </div>
         </div>
@@ -68,7 +69,7 @@
     </section>
 
     <section class="section projects" id="projects" aria-labelledby="projectsTitle">
-      <div class="section-heading">
+      <div class="section-heading" data-reveal>
         <p class="eyebrow">Projects</p>
         <h2 id="projectsTitle">三个品牌，一套完整档案</h2>
         <p>从航拍影像、农业科技到全景内容，把产品能力、场景语言和创作流程沉淀为可复用的作品档案。</p>
@@ -151,7 +152,7 @@
 
     <section class="spec-band" id="specs" aria-labelledby="specsTitle">
       <div class="section spec-section">
-        <div class="section-heading spec-heading">
+      <div class="section-heading spec-heading" data-reveal>
           <p class="eyebrow eyebrow-light">Product Archive</p>
           <h2 id="specsTitle">核心产品档案</h2>
           <p>19 款核心产品档案，参数与价格来自官方公开页面，可能存在更新；极飞采用按配置方案询价制。</p>
@@ -676,7 +677,7 @@
 
     <section class="gallery-band" id="gallery" aria-labelledby="galleryTitle">
       <div class="section gallery-section">
-        <div class="section-heading">
+      <div class="section-heading" data-reveal>
           <p class="eyebrow">Gallery</p>
           <h2 id="galleryTitle">官方素材档案</h2>
           <p>200 张来自大疆、极飞、影石官方公开页面的产品与场景图，按品牌分类展示。</p>
@@ -735,5 +736,8 @@
     <p>© 2026 航野视界 · 大疆 / 极飞 / 影石</p>
     <p>参数、价格与图片均整理自官方公开页面，以官方最新信息为准。</p>
   </footer>
+  <button class="back-to-top" type="button" aria-label="返回顶部">
+    <i data-lucide="arrow-up" aria-hidden="true"></i>
+  </button>
 </body>
 </html>

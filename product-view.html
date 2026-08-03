@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="product.css">
   <script src="assets/lucide.min.js"></script>
+  <script src="assets/effects.js" defer></script>
   <script src="product.js" defer></script>
   <script src="product-view.js" defer></script>
 </head>
@@ -48,7 +49,7 @@
     </section>
 
     <section class="product-section" id="specs" aria-labelledby="productSpecsTitle">
-      <div class="product-heading">
+      <div class="product-heading" data-reveal>
         <p class="eyebrow">Complete Specs</p>
         <h2 id="productSpecsTitle">完整参数</h2>
         <p>以下数据整理自官方公开页面，具体版本与规格以官方最新信息为准。</p>
@@ -58,7 +59,7 @@
 
     <section class="product-price-section" id="price" aria-labelledby="productPriceTitle">
       <div class="product-section-inner">
-        <div class="product-heading">
+      <div class="product-heading" data-reveal>
           <p class="eyebrow">Price Plan</p>
           <h2 id="productPriceTitle">价格方案</h2>
           <p>价格与可选配置可能随活动更新，请以下单时官方页面为准。</p>
@@ -73,7 +74,7 @@
 
     <section class="product-materials-section" id="materials" aria-labelledby="productMaterialsTitle">
       <div class="product-section-inner">
-        <div class="product-heading">
+      <div class="product-heading" data-reveal>
           <p class="eyebrow">Materials</p>
           <h2 id="productMaterialsTitle">相关素材</h2>
           <p>从航野视界产品档案中精选的相关影像。</p>
@@ -91,5 +92,8 @@
   <footer class="site-footer">
     <p>© 2026 航野视界 · 产品详细参数</p>
   </footer>
+  <button class="back-to-top" type="button" aria-label="返回顶部">
+    <i data-lucide="arrow-up" aria-hidden="true"></i>
+  </button>
 </body>
 </html>
