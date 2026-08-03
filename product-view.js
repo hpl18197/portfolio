@@ -111,6 +111,10 @@ async function loadProduct() {
     </figure>
   `).join("");
 
+  if (window.HVEmbeddedGallery) {
+    window.HVEmbeddedGallery.setBrand(product.brand);
+  }
+
   if (window.HVEFFECTS) {
     window.HVEFFECTS.observeReveal(document.body);
     window.HVEFFECTS.initBackToTop();

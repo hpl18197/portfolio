@@ -65,7 +65,7 @@ function renderGallery() {
   galleryGrid.innerHTML = visibleItems.map((item) => `
     <figure class="gallery-item">
       <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async" width="720" height="540">
-      <figcaption>${escapeHtml(item.title)}</figcaption>
+      <figcaption>${escapeHtml(item.brand || "")} · ${escapeHtml(item.title)}</figcaption>
     </figure>
   `).join("");
 
@@ -322,7 +322,7 @@ function renderDetailGallery(key) {
   holder.innerHTML = items.map((item) => `
     <figure class="detail-gallery-item">
       <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async">
-      <figcaption>${escapeHtml(item.title)}</figcaption>
+      <figcaption>${escapeHtml(item.brand || "")} · ${escapeHtml(item.title)}</figcaption>
     </figure>
   `).join("");
 }

@@ -337,6 +337,28 @@
   }
 }
 
+.embedded-gallery {
+  border-top: 1px solid var(--line);
+  background: #fbfaf9;
+}
+
+.embedded-gallery .section {
+  width: min(1120px, calc(100% - 48px));
+  padding: 84px 0;
+}
+
+.embedded-gallery .gallery-item figcaption span {
+  color: #1772f6;
+  font-weight: 800;
+}
+
+@media (max-width: 520px) {
+  .embedded-gallery .section {
+    width: min(100% - 32px, 1120px);
+    padding: 64px 0;
+  }
+}
+
 /* Kimi-inspired product pages */
 .product-hero {
   background: #fff;
