@@ -412,7 +412,7 @@ function applyHeroSearch() {
 function initHeroSearch() {
   if (!heroSearch || !specGrid) return;
   heroSearch.addEventListener("input", () => {
-    document.querySelectorAll(".hero-quick button").forEach((button) => button.classList.remove("is-active"));
+    document.querySelectorAll("[data-brand-filter]").forEach((button) => button.classList.remove("is-active"));
     applyHeroSearch();
   });
   heroSearch.addEventListener("keydown", (event) => {
@@ -426,10 +426,10 @@ function initHeroSearch() {
       document.getElementById("specs")?.scrollIntoView({ behavior: "smooth" });
     });
   }
-  document.querySelectorAll(".hero-quick button").forEach((button) => {
+  document.querySelectorAll("[data-brand-filter]").forEach((button) => {
     button.addEventListener("click", () => {
       const brand = button.dataset.brandFilter || "";
-      document.querySelectorAll(".hero-quick button").forEach((item) => item.classList.toggle("is-active", item === button));
+      document.querySelectorAll("[data-brand-filter]").forEach((item) => item.classList.toggle("is-active", item === button));
       if (heroSearch) heroSearch.value = "";
       const cards = [...specGrid.querySelectorAll(".spec-card")];
       let visible = 0;
@@ -439,6 +439,7 @@ function initHeroSearch() {
         if (matched) visible += 1;
       });
       if (specEmpty) specEmpty.hidden = visible !== 0;
+      document.getElementById("specs")?.scrollIntoView({ behavior: "smooth" });
     });
   });
 }
