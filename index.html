@@ -19,6 +19,7 @@
   <script src="script.js" defer></script>
 </head>
 <body>
+  <div class="scroll-progress" aria-hidden="true"></div>
   <header class="site-header" id="siteHeader">
     <a class="brand" href="#top" aria-label="返回顶部">
       <span class="brand-mark" aria-hidden="true">航</span>
@@ -33,7 +34,6 @@
       <a href="#specs">产品档案</a>
       <a href="#gallery">素材画廊</a>
       <a href="#contact">联系</a>
-      <a href="admin.html">管理中心</a>
     </nav>
   </header>
 
@@ -41,6 +41,7 @@
     <section class="hero" id="top" aria-labelledby="heroTitle">
       <div class="hero-media" aria-hidden="true"></div>
       <div class="hero-shade" aria-hidden="true"></div>
+      <canvas class="hero-fx" aria-hidden="true"></canvas>
       <div class="hero-inner">
         <p class="eyebrow hero-eyebrow">Vision Field · 2026</p>
         <h1 id="heroTitle">航野视界<br><span>科技影像与智慧农业项目档案</span></h1>
