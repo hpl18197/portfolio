@@ -5,6 +5,9 @@ const galleryGrid = document.getElementById("galleryGrid");
 const galleryStatus = document.getElementById("galleryStatus");
 const loadMore = document.getElementById("loadMore");
 const filterButtons = document.querySelectorAll(".filter-btn");
+const specGrid = document.querySelector(".spec-grid");
+const heroProductCount = document.querySelectorAll(".hero-metrics strong")[2];
+const specHeadingNote = document.querySelector(".spec-heading p");
 
 let galleryData = [];
 let currentFilter = "all";
@@ -327,17 +330,71 @@ const productPages = {
   insta: "product-insta.html"
 };
 
-document.querySelectorAll(".spec-card").forEach((card) => {
-  card.addEventListener("click", (event) => {
-    if (event.target.closest("a")) return;
-    const link = card.querySelector(".spec-open");
-    if (link) window.open(link.href, "_blank", "noopener");
-  });
+specGrid.addEventListener("click", (event) => {
+  if (event.target.closest("a")) return;
+  const card = event.target.closest(".spec-card");
+  if (!card) return;
+  const link = card.querySelector(".spec-open");
+  if (link) window.open(link.href, "_blank", "noopener");
 });
 
 document.querySelectorAll(".spec-open").forEach((link) => {
   link.addEventListener("click", (event) => event.stopPropagation());
 });
+
+function productBrandClass(brand) {
+  const map = {
+    DJI: "brand-dji",
+    XAG: "brand-xag",
+    Insta360: "brand-insta"
+  };
+  return map[brand] || "brand-dji";
+}
+
+function renderProductCatalog(catalog) {
+  const activeProducts = catalog.filter((item) => item.active !== false);
+  specGrid.innerHTML = activeProducts.map((product) => {
+    const specs = (Array.isArray(product.specs) ? product.specs : []).slice(0, 8);
+    const specsHtml = specs.map((spec) => `
+      <div><dt>${escapeHtml(spec.label)}</dt><dd>${escapeHtml(spec.value)}</dd></div>
+    `).join("");
+    const detailUrl = `product-view.html?product=${encodeURIComponent(product.id)}`;
+    return `
+      <article class="spec-card" data-product="${escapeHtml(product.id)}">
+        <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)} 官方产品图">
+        <div class="spec-content">
+          <div class="spec-meta">
+            <span class="brand-tag ${productBrandClass(product.brand)}">${escapeHtml(product.brand)}</span>
+            <span>${escapeHtml(product.category || "产品档案")}</span>
+          </div>
+          <h3>${escapeHtml(product.name)}</h3>
+          <p class="spec-price">${escapeHtml(product.price || "按官方页面")} <span>${escapeHtml(product.priceNote || "")}</span></p>
+          <dl class="spec-list">${specsHtml}</dl>
+          <p class="spec-source">来源：${escapeHtml(product.sourceLabel || "官方公开页面")}</p>
+          <a class="spec-open" href="${detailUrl}" target="_blank" rel="noopener" data-product="${escapeHtml(product.id)}">
+            打开详细参数页面
+            <i data-lucide="corner-down-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  if (heroProductCount) heroProductCount.textContent = String(activeProducts.length);
+  if (specHeadingNote) specHeadingNote.textContent = `${activeProducts.length} 款核心产品档案，参数与价格来自官方公开页面，可能存在更新；极飞采用按配置方案询价制。`;
+  if (window.lucide) lucide.createIcons();
+}
+
+async function initProductCatalog() {
+  try {
+    const response = await fetch("assets/catalog.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("Catalog not found");
+    const catalog = await response.json();
+    renderProductCatalog(catalog);
+  } catch (error) {
+    console.warn("Product catalog unavailable, keeping static fallback.", error);
+  }
+}
 
 async function initGallery() {
   try {
@@ -357,6 +414,7 @@ async function initGallery() {
 document.addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 initGallery();
+initProductCatalog();
 
 if (window.lucide) {
   lucide.createIcons();

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="航野视界产品管理中心。">
+  <link rel="icon" href="data:,">
+  <title>航野视界 | 管理中心</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+  <script src="assets/lucide.min.js"></script>
+  <script src="admin.js" defer></script>
+</head>
+<body class="admin-body">
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <a class="brand" href="index.html" aria-label="返回航野视界首页">
+        <span class="brand-mark" aria-hidden="true">航</span>
+        <span class="brand-name">航野视界</span>
+      </a>
+      <div class="admin-header-actions">
+        <span class="admin-badge">管理中心</span>
+        <a class="admin-link" href="index.html" target="_blank" rel="noopener">
+          查看前台
+          <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-shell">
+    <section class="admin-panel admin-connect">
+      <div class="admin-connect-copy">
+        <p class="eyebrow">Repository</p>
+        <h1>连接 GitHub 仓库</h1>
+        <p>管理员通过 GitHub API 直接发布产品改动。Token 只保存在当前浏览器，不会写入网站文件。</p>
+      </div>
+      <form class="admin-connect-form" id="connectForm">
+        <label>
+          <span>仓库</span>
+          <input id="repoInput" value="hpl18197/portfolio" autocomplete="off">
+        </label>
+        <label>
+          <span>GitHub Token</span>
+          <input id="tokenInput" type="password" autocomplete="off" placeholder="ghp_ 或 github_pat_">
+        </label>
+        <button class="admin-btn admin-btn-primary" type="submit">
+          连接并载入产品
+          <i data-lucide="plug" aria-hidden="true"></i>
+        </button>
+      </form>
+      <p class="admin-connect-status" id="connectStatus">尚未连接仓库，当前显示本地产品档案。</p>
+    </section>
+
+    <section class="admin-panel admin-overview">
+      <div class="admin-overview-head">
+        <div>
+          <p class="eyebrow">Products</p>
+          <h2>产品管理</h2>
+          <p id="adminMeta">正在读取产品档案</p>
+        </div>
+        <div class="admin-overview-tools">
+          <input id="searchInput" placeholder="搜索产品名称或品牌" autocomplete="off">
+          <select id="statusFilter" aria-label="状态筛选">
+            <option value="all">全部状态</option>
+            <option value="active">已上架</option>
+            <option value="hidden">已下架</option>
+          </select>
+          <button class="admin-btn admin-btn-primary" id="newProductBtn" type="button">
+            新增产品
+            <i data-lucide="plus" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="admin-stats">
+        <div><strong id="statTotal">0</strong><span>全部产品</span></div>
+        <div><strong id="statActive">0</strong><span>已上架</span></div>
+        <div><strong id="statHidden">0</strong><span>已下架</span></div>
+      </div>
+
+      <div class="admin-list" id="productList"></div>
+    </section>
+  </main>
+
+  <dialog class="admin-dialog" id="editorDialog">
+    <div class="admin-dialog-shell">
+      <div class="admin-dialog-head">
+        <div>
+          <p class="eyebrow">Editor</p>
+          <h2 id="editorTitle">新增产品</h2>
+        </div>
+        <button class="admin-btn admin-btn-ghost" id="closeEditorBtn" type="button" aria-label="关闭">
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <form class="admin-form" id="productForm">
+        <div class="admin-form-grid">
+          <label>
+            <span>产品 ID</span>
+            <input id="fieldId" placeholder="例如 mini5pro">
+          </label>
+          <label>
+            <span>产品名称</span>
+            <input id="fieldName" required placeholder="例如 Mini 5 Pro">
+          </label>
+          <label>
+            <span>品牌</span>
+            <select id="fieldBrand">
+              <option value="DJI">DJI 大疆</option>
+              <option value="XAG">XAG 极飞</option>
+              <option value="Insta360">Insta360 影石</option>
+            </select>
+          </label>
+          <label>
+            <span>分类</span>
+            <input id="fieldCategory" placeholder="例如 轻量航拍无人机">
+          </label>
+          <label>
+            <span>价格</span>
+            <input id="fieldPrice" placeholder="例如 ¥4,788 起">
+          </label>
+          <label>
+            <span>价格说明</span>
+            <input id="fieldPriceNote" placeholder="例如 RC-N2 版本，以官方商城为准">
+          </label>
+        </div>
+
+        <label class="admin-full-field">
+          <span>一句话简介</span>
+          <textarea id="fieldSummary" rows="3"></textarea>
+        </label>
+
+        <div class="admin-form-grid">
+          <label>
+            <span>来源标签</span>
+            <input id="fieldSourceLabel" placeholder="例如 DJI 官网 Mini 5 Pro 页面">
+          </label>
+          <label>
+            <span>来源链接</span>
+            <input id="fieldSourceUrl" placeholder="https://example.com">
+          </label>
+        </div>
+
+        <div class="admin-upload-grid">
+          <div class="admin-upload">
+            <span>产品主图</span>
+            <input id="fieldImage" type="file" accept="image/*">
+            <img id="imagePreview" alt="产品主图预览">
+          </div>
+          <div class="admin-upload">
+            <span>场景图（可多选）</span>
+            <input id="fieldScenes" type="file" accept="image/*" multiple>
+            <div class="admin-scene-preview" id="scenePreview"></div>
+          </div>
+        </div>
+
+        <div class="admin-active-field">
+          <label for="fieldActive">
+            <input id="fieldActive" type="checkbox" checked>
+            <span>上架展示</span>
+          </label>
+        </div>
+
+        <div class="admin-spec-editor">
+          <div class="admin-spec-head">
+            <div>
+              <p class="eyebrow">Specs</p>
+              <h3>完整参数</h3>
+            </div>
+            <button class="admin-btn" id="addSpecBtn" type="button">
+              添加参数
+              <i data-lucide="plus" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div id="specRows"></div>
+        </div>
+
+        <div class="admin-form-actions">
+          <button class="admin-btn admin-btn-ghost" id="cancelEditorBtn" type="button">取消</button>
+          <button class="admin-btn admin-btn-primary" type="submit">
+            保存并发布
+            <i data-lucide="cloud-upload" aria-hidden="true"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <div class="admin-toast" id="adminToast" role="status"></div>
+</body>
+</html>

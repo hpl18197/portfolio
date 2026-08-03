@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="航野视界，产品详细参数页面。">
+  <link rel="icon" href="data:,">
+  <title>航野视界 | 产品详细参数</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="product.css">
+  <script src="assets/lucide.min.js"></script>
+  <script src="product.js" defer></script>
+  <script src="product-view.js" defer></script>
+</head>
+<body>
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="index.html" aria-label="返回航野视界首页">
+      <span class="brand-mark" aria-hidden="true">航</span>
+      <span class="brand-name">航野视界</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="打开导航" aria-expanded="false">
+      <i data-lucide="menu" class="icon-menu" aria-hidden="true"></i>
+      <i data-lucide="x" class="icon-close" aria-hidden="true"></i>
+    </button>
+    <nav class="site-nav" id="primaryNav" aria-label="产品参数导航">
+      <a href="index.html#specs">全部产品</a>
+      <a href="index.html#gallery">素材画廊</a>
+      <a href="index.html#contact">联系</a>
+      <a href="admin.html">管理中心</a>
+    </nav>
+  </header>
+
+  <main id="productViewMain">
+    <section class="product-hero" aria-labelledby="productTitle">
+      <div class="product-hero-media" id="productHeroMedia">
+        <img id="productHeroImage" src="" alt="产品主图">
+      </div>
+      <div class="product-hero-copy">
+        <p class="eyebrow hero-eyebrow" id="productBrand">航野视界</p>
+        <h1 id="productTitle">产品加载中</h1>
+        <p class="product-price" id="productPrice">正在读取产品档案</p>
+        <p class="product-summary" id="productSummary"></p>
+        <div class="product-hero-actions">
+          <a class="btn btn-light" href="#specs">查看完整参数</a>
+          <a class="btn btn-ghost-dark" href="#materials">浏览相关素材</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-section" id="specs" aria-labelledby="productSpecsTitle">
+      <div class="product-heading">
+        <p class="eyebrow">Complete Specs</p>
+        <h2 id="productSpecsTitle">完整参数</h2>
+        <p>以下数据整理自官方公开页面，具体版本与规格以官方最新信息为准。</p>
+      </div>
+      <dl class="product-spec-list" id="productSpecList"></dl>
+    </section>
+
+    <section class="product-price-section" id="price" aria-labelledby="productPriceTitle">
+      <div class="product-section-inner">
+        <div class="product-heading">
+          <p class="eyebrow">Price Plan</p>
+          <h2 id="productPriceTitle">价格方案</h2>
+          <p>价格与可选配置可能随活动更新，请以下单时官方页面为准。</p>
+        </div>
+        <div class="product-plan-grid" id="productPlanGrid"></div>
+        <a class="product-back" id="productSourceLink" href="#" target="_blank" rel="noopener">
+          前往官方页面
+          <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </section>
+
+    <section class="product-materials-section" id="materials" aria-labelledby="productMaterialsTitle">
+      <div class="product-section-inner">
+        <div class="product-heading">
+          <p class="eyebrow">Materials</p>
+          <h2 id="productMaterialsTitle">相关素材</h2>
+          <p>从航野视界产品档案中精选的相关影像。</p>
+        </div>
+        <div class="product-material-grid" id="productMaterialGrid"></div>
+        <p class="product-source" id="productSourceText"></p>
+        <a class="product-back" href="index.html">
+          返回航野视界首页
+          <i data-lucide="arrow-left" aria-hidden="true"></i>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 航野视界 · 产品详细参数</p>
+  </footer>
+</body>
+</html>
