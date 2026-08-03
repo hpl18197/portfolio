@@ -2896,3 +2896,67 @@ img.brand-mark {
   transform: rotate(-4deg) scale(1.06);
   box-shadow: 0 10px 24px rgba(23, 114, 246, 0.28);
 }
+
+.photo-upload {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: 0 12px 34px rgba(23, 114, 246, 0.06);
+}
+
+.photo-upload-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.photo-upload-head strong {
+  font-size: 1.1rem;
+}
+
+.photo-upload-head span {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(23, 114, 246, 0.09);
+  color: #1772f6;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.photo-upload form {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.6fr) minmax(220px, 1.4fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.photo-upload select,
+.photo-upload input[type="file"] {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+}
+
+.photo-upload .btn {
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .photo-upload form {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-upload .btn {
+    width: 100%;
+  }
+}

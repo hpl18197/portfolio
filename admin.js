@@ -7,7 +7,8 @@ const state = {
   catalogSha: null,
   editingId: null,
   pendingHero: null,
-  pendingScenes: []
+  pendingScenes: [],
+  userPhotos: []
 };
 
 function saveSettings() {
@@ -18,6 +19,7 @@ function saveSettings() {
 function restoreSettings() {
   state.repo = localStorage.getItem("hvAdminRepo") || state.repo;
   state.token = localStorage.getItem("hvAdminToken") || "";
+  state.userPhotos = loadUserPhotos();
   $("repoInput").value = state.repo;
   $("tokenInput").value = state.token;
 }
@@ -45,6 +47,107 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function loadUserPhotos() {
+  try {
+    return JSON.parse(localStorage.getItem("hvUserPhotos") || "[]");
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveUserPhotos(items) {
+  try {
+    localStorage.setItem("hvUserPhotos", JSON.stringify(items));
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+function compressImageFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("读取照片失败"));
+    reader.onload = () => {
+      const image = new Image();
+      image.onerror = () => reject(new Error("照片格式不支持"));
+      image.onload = () => {
+        const max = 1200;
+        const scale = Math.min(1, max / Math.max(image.width, image.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+        const context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error("照片压缩失败"));
+            return;
+          }
+          const blobReader = new FileReader();
+          blobReader.onload = () => resolve(blobReader.result);
+          blobReader.onerror = () => reject(new Error("照片保存失败"));
+          blobReader.readAsDataURL(blob);
+        }, "image/jpeg", 0.82);
+      };
+      image.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderAdminPhotos() {
+  const grid = $("adminPhotoGrid");
+  if (!grid) return;
+  grid.innerHTML = state.userPhotos.map((photo, index) => `
+    <figure class="admin-photo-item">
+      <img src="${escapeHtml(photo.src)}" alt="本机照片投稿">
+      <figcaption>${escapeHtml(photo.brand)} · ${escapeHtml(photo.title)}</figcaption>
+      <button class="admin-btn admin-btn-danger" type="button" data-photo-index="${index}">
+        删除
+      </button>
+    </figure>
+  `).join("");
+  if (window.lucide) lucide.createIcons();
+}
+
+async function addAdminPhotos(files) {
+  const brandValue = $("photoBrand").value;
+  const brandLabels = {
+    dji: "DJI",
+    xag: "XAG",
+    insta: "Insta360"
+  };
+  const brand = brandLabels[brandValue] || "DJI";
+  const category = brandValue;
+  let uploaded = 0;
+  let failed = 0;
+  $("photoUploadStatus").textContent = "正在压缩照片...";
+
+  for (const file of files) {
+    try {
+      const src = await compressImageFile(file);
+      state.userPhotos.unshift({
+        src,
+        category,
+        brand,
+        title: "本机投稿",
+        source: "local"
+      });
+      uploaded += 1;
+    } catch (error) {
+      failed += 1;
+    }
+  }
+
+  const stored = saveUserPhotos(state.userPhotos.slice(0, 30));
+  renderAdminPhotos();
+  $("photoFile").value = "";
+  $("photoUploadStatus").textContent = stored
+    ? `已上传 ${uploaded} 张照片，保存在当前浏览器。${failed ? ` ${failed} 张失败。` : ""}`
+    : `已加入当前页面 ${uploaded} 张，但浏览器存储空间不足。`;
 }
 
 function encodeText(value) {
@@ -149,14 +252,17 @@ function renderStats() {
   $("statActive").dataset.count = String(active);
   $("statHidden").textContent = "0";
   $("statHidden").dataset.count = String(state.catalog.length - active);
+  $("newProductBtn").disabled = !state.token;
+  $("newProductBtn").title = state.token ? "新增产品" : "上传产品需要管理员权限";
   $("adminMeta").textContent = state.token
-    ? `已连接 ${state.repo}，保存后会自动发布到 GitHub Pages。`
-    : "未连接仓库，当前显示本地产品档案。";
+    ? `已连接 ${state.repo}，照片、产品和项目均可由管理员发布。`
+    : "未连接仓库，照片可上传；产品和项目上传需要管理员 Token。";
   if (window.HVEFFECTS) window.HVEFFECTS.animateCounters(document.querySelector(".admin-stats"));
 }
 
 function renderList() {
   const list = $("productList");
+  const canManage = Boolean(state.token);
   const query = $("searchInput").value.trim().toLowerCase();
   const status = $("statusFilter").value;
   const items = state.catalog.filter((product) => {
@@ -198,9 +304,9 @@ function renderList() {
             <i data-lucide="eye" aria-hidden="true"></i>
             预览
           </a>
-          <button class="admin-btn" type="button" data-action="edit" data-id="${escapeHtml(product.id)}">编辑</button>
-          <button class="admin-btn" type="button" data-action="${toggleAction}" data-id="${escapeHtml(product.id)}">${toggleText}</button>
-          <button class="admin-btn admin-btn-danger" type="button" data-action="delete" data-id="${escapeHtml(product.id)}">删除</button>
+          <button class="admin-btn" type="button" data-action="edit" data-id="${escapeHtml(product.id)}" ${canManage ? "" : "disabled"} title="${canManage ? "编辑" : "需要管理员权限"}">编辑</button>
+          <button class="admin-btn" type="button" data-action="${toggleAction}" data-id="${escapeHtml(product.id)}" ${canManage ? "" : "disabled"} title="${canManage ? toggleText : "需要管理员权限"}">${toggleText}</button>
+          <button class="admin-btn admin-btn-danger" type="button" data-action="delete" data-id="${escapeHtml(product.id)}" ${canManage ? "" : "disabled"} title="${canManage ? "删除" : "需要管理员权限"}">删除</button>
         </div>
       </article>
     `;
@@ -213,6 +319,7 @@ function renderList() {
 function renderAll() {
   renderStats();
   renderList();
+  renderAdminPhotos();
 }
 
 function addSpecRow(label = "", value = "") {
@@ -267,6 +374,10 @@ function renderScenePreview() {
 }
 
 function openNewProduct() {
+  if (!state.token) {
+    toast("上传产品需要管理员权限，请先连接 GitHub Token。", true);
+    return;
+  }
   state.editingId = null;
   state.pendingHero = null;
   state.pendingScenes = [];
@@ -285,6 +396,10 @@ function openNewProduct() {
 }
 
 function openEditProduct(id) {
+  if (!state.token) {
+    toast("编辑产品需要管理员权限，请先连接 GitHub Token。", true);
+    return;
+  }
   const product = state.catalog.find((item) => item.id === id);
   if (!product) return;
   state.editingId = product.id;
@@ -396,6 +511,10 @@ async function saveProduct(event) {
 }
 
 async function toggleProduct(id, publish) {
+  if (!state.token) {
+    toast("产品上下架需要管理员权限，请先连接 GitHub Token。", true);
+    return;
+  }
   const product = state.catalog.find((item) => item.id === id);
   if (!product) return;
   const next = publish ? true : false;
@@ -411,6 +530,10 @@ async function toggleProduct(id, publish) {
 }
 
 async function deleteProduct(id) {
+  if (!state.token) {
+    toast("删除产品需要管理员权限，请先连接 GitHub Token。", true);
+    return;
+  }
   const product = state.catalog.find((item) => item.id === id);
   if (!product) return;
   const confirmed = window.confirm(`确定删除“${product.name}”吗？此操作会移除产品档案。`);
@@ -470,6 +593,24 @@ async function loadLocalCatalog() {
 function init() {
   restoreSettings();
   $("connectForm").addEventListener("submit", connectRepo);
+  $("photoUploadForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const files = Array.from($("photoFile").files || []);
+    if (!files.length) {
+      $("photoUploadStatus").textContent = "请先选择照片。";
+      return;
+    }
+    addAdminPhotos(files);
+  });
+  $("adminPhotoGrid").addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-photo-index]");
+    if (!button) return;
+    const index = Number(button.dataset.photoIndex);
+    if (!Number.isInteger(index) || index < 0 || index >= state.userPhotos.length) return;
+    state.userPhotos.splice(index, 1);
+    saveUserPhotos(state.userPhotos);
+    renderAdminPhotos();
+  });
   $("newProductBtn").addEventListener("click", openNewProduct);
   $("closeEditorBtn").addEventListener("click", closeEditor);
   $("cancelEditorBtn").addEventListener("click", closeEditor);
@@ -498,6 +639,7 @@ function init() {
     if (action === "delete") deleteProduct(id);
   });
   loadLocalCatalog();
+  renderAdminPhotos();
   if (window.HVEFFECTS) window.HVEFFECTS.observeReveal(document.body);
   if (window.lucide) lucide.createIcons();
 }

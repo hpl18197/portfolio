@@ -11,10 +11,33 @@ const heroSearch = document.getElementById("heroSearch");
 const heroSearchBtn = document.getElementById("heroSearchBtn");
 const heroProductCount = document.querySelectorAll(".hero-metrics strong")[2];
 const specHeadingNote = document.querySelector(".spec-heading p");
+const photoUploadForm = document.getElementById("photoUploadForm");
+const photoFile = document.getElementById("photoFile");
+const photoBrand = document.getElementById("photoBrand");
+const photoStatus = document.getElementById("photoUploadStatus");
 
 let galleryData = [];
 let currentFilter = "all";
 let visibleCount = 30;
+
+function loadUserPhotos() {
+  try {
+    return JSON.parse(localStorage.getItem("hvUserPhotos") || "[]");
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveUserPhotos(items) {
+  try {
+    localStorage.setItem("hvUserPhotos", JSON.stringify(items));
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+let userPhotos = loadUserPhotos();
 
 function onScroll() {
   header.classList.toggle("is-scrolled", window.scrollY > 24);
@@ -498,8 +521,11 @@ async function initGallery() {
   try {
     const response = await fetch("assets/gallery.json");
     if (!response.ok) throw new Error("Gallery not found");
-    galleryData = await response.json();
+    galleryData = [...userPhotos, ...(await response.json())];
   } catch (error) {
+    galleryData = [...userPhotos];
+    updateCounts();
+    renderGallery();
     galleryStatus.textContent = "素材加载失败，请刷新页面重试";
     loadMore.style.display = "none";
     return;
@@ -507,6 +533,91 @@ async function initGallery() {
 
   updateCounts();
   renderGallery();
+}
+
+function compressImageFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("读取照片失败"));
+    reader.onload = () => {
+      const image = new Image();
+      image.onerror = () => reject(new Error("照片格式不支持"));
+      image.onload = () => {
+        const max = 1200;
+        const scale = Math.min(1, max / Math.max(image.width, image.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+        const context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            reject(new Error("照片压缩失败"));
+            return;
+          }
+          const blobReader = new FileReader();
+          blobReader.onload = () => resolve(blobReader.result);
+          blobReader.onerror = () => reject(new Error("照片保存失败"));
+          blobReader.readAsDataURL(blob);
+        }, "image/jpeg", 0.82);
+      };
+      image.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function addUserPhotos(files) {
+  const brandValue = photoBrand.value;
+  const brandLabels = {
+    dji: "DJI",
+    xag: "XAG",
+    insta: "Insta360"
+  };
+  const brand = brandLabels[brandValue] || "DJI";
+  const category = brandValue;
+  let uploaded = 0;
+  let failed = 0;
+  photoStatus.textContent = "正在压缩照片...";
+
+  for (const file of files) {
+    try {
+      const src = await compressImageFile(file);
+      const item = {
+        src,
+        category,
+        brand,
+        title: "本机投稿",
+        source: "local"
+      };
+      userPhotos.unshift(item);
+      galleryData.unshift(item);
+      uploaded += 1;
+    } catch (error) {
+      failed += 1;
+    }
+  }
+
+  const stored = saveUserPhotos(userPhotos.slice(0, 30));
+  visibleCount = Math.max(visibleCount, 30);
+  updateCounts();
+  renderGallery();
+  photoFile.value = "";
+  photoStatus.textContent = stored
+    ? `已上传 ${uploaded} 张照片，保存在当前浏览器。${failed ? ` ${failed} 张失败。` : ""}`
+    : `已加入当前页面 ${uploaded} 张，但浏览器存储空间不足。`;
+}
+
+if (photoUploadForm) {
+  photoUploadForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const files = Array.from(photoFile.files || []);
+    if (!files.length) {
+      photoStatus.textContent = "请先选择照片。";
+      return;
+    }
+    addUserPhotos(files);
+  });
 }
 
 document.addEventListener("scroll", onScroll, { passive: true });

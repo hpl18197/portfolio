@@ -165,7 +165,13 @@ async function initEmbeddedGallery() {
   try {
     const response = await fetch("assets/gallery.json");
     if (!response.ok) throw new Error("Gallery not found");
-    embeddedGallery.data = await response.json();
+    let userPhotos = [];
+    try {
+      userPhotos = JSON.parse(localStorage.getItem("hvUserPhotos") || "[]");
+    } catch (error) {
+      userPhotos = [];
+    }
+    embeddedGallery.data = [...userPhotos, ...(await response.json())];
     updateEmbeddedCounts();
     setEmbeddedBrand(pageBrandKey());
   } catch (error) {

@@ -34,7 +34,7 @@
       <div class="admin-connect-copy">
         <p class="eyebrow">Repository</p>
         <h1>连接 GitHub 仓库</h1>
-        <p>管理员通过 GitHub API 直接发布产品改动。Token 只保存在当前浏览器，不会写入网站文件。</p>
+        <p>照片上传无需管理员 Token；产品和项目上传需要管理员权限。Token 只保存在当前浏览器，不会写入网站文件。</p>
       </div>
       <form class="admin-connect-form" id="connectForm">
         <label>
@@ -51,6 +51,34 @@
         </button>
       </form>
       <p class="admin-connect-status" id="connectStatus">尚未连接仓库，当前显示本地产品档案。</p>
+    </section>
+
+    <section class="admin-panel admin-photo-panel">
+      <div class="admin-photo-head">
+        <p class="eyebrow">Photos</p>
+        <h2>上传照片素材</h2>
+        <p>无需管理员 Token，照片会保存在当前浏览器并加入素材投稿。</p>
+      </div>
+      <form class="admin-photo-form" id="photoUploadForm">
+        <label>
+          <span>品牌</span>
+          <select id="photoBrand">
+            <option value="dji">DJI 大疆</option>
+            <option value="xag">XAG 极飞</option>
+            <option value="insta">Insta360 影石</option>
+          </select>
+        </label>
+        <label>
+          <span>照片</span>
+          <input id="photoFile" type="file" accept="image/*" multiple>
+        </label>
+        <button class="admin-btn admin-btn-primary" type="submit">
+          上传照片
+          <i data-lucide="image-plus" aria-hidden="true"></i>
+        </button>
+      </form>
+      <div class="admin-photo-grid" id="adminPhotoGrid"></div>
+      <p class="admin-connect-status" id="photoUploadStatus">尚未上传照片。</p>
     </section>
 
     <section class="admin-panel admin-overview">

@@ -772,6 +772,26 @@
           <p class="gallery-status" id="galleryStatus" aria-live="polite">已载入 30 / 200 张</p>
         </div>
 
+        <div class="photo-upload" id="photoUploadPanel">
+          <div class="photo-upload-head">
+            <strong>上传照片</strong>
+            <span>无需管理员权限</span>
+          </div>
+          <form id="photoUploadForm">
+            <select id="photoBrand" aria-label="照片品牌">
+              <option value="dji">DJI 大疆</option>
+              <option value="xag">XAG 极飞</option>
+              <option value="insta">Insta360 影石</option>
+            </select>
+            <input id="photoFile" type="file" accept="image/*" multiple aria-label="选择照片">
+            <button class="btn btn-primary" type="submit">
+              上传照片
+              <i data-lucide="image-plus" aria-hidden="true"></i>
+            </button>
+          </form>
+          <p class="gallery-status" id="photoUploadStatus" aria-live="polite">照片会保存在当前浏览器并加入素材库。</p>
+        </div>
+
         <div class="gallery-grid" id="galleryGrid"></div>
 
         <div class="gallery-more">
