@@ -2881,3 +2881,18 @@ div[id="specs"] {
     background: none;
   }
 }
+
+img.brand-mark {
+  display: block;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: transparent;
+  object-fit: cover;
+  box-shadow: 0 6px 16px rgba(23, 114, 246, 0.18);
+}
+
+.brand:hover img.brand-mark {
+  transform: rotate(-4deg) scale(1.06);
+  box-shadow: 0 10px 24px rgba(23, 114, 246, 0.28);
+}
