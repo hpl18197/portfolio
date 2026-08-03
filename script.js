@@ -64,7 +64,7 @@ function renderGallery() {
 
   galleryGrid.innerHTML = visibleItems.map((item) => `
     <figure class="gallery-item">
-      <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.title)}" loading="lazy" width="720" height="540">
+      <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async" width="720" height="540">
       <figcaption>${escapeHtml(item.title)}</figcaption>
     </figure>
   `).join("");
@@ -219,6 +219,7 @@ function buildDetailDialog(key) {
   dialog.className = "detail-dialog";
   dialog.id = `detail-${key}`;
   dialog.setAttribute("aria-labelledby", `detailTitle-${key}`);
+  dialog.setAttribute("aria-modal", "true");
   dialog.innerHTML = `
     <div class="detail-shell">
       <button class="detail-close" type="button" aria-label="关闭详细参数">
@@ -242,26 +243,26 @@ function buildDetailDialog(key) {
         </div>
       </div>
       <div class="detail-tabs" role="tablist" aria-label="${escapeHtml(detail.product)} 详细参数">
-        <button class="detail-tab is-active" type="button" role="tab" aria-selected="true" data-tab="specs">完整参数</button>
-        <button class="detail-tab" type="button" role="tab" aria-selected="false" data-tab="plans">价格方案</button>
-        <button class="detail-tab" type="button" role="tab" aria-selected="false" data-tab="gallery">相关素材</button>
+        <button class="detail-tab is-active" type="button" role="tab" aria-selected="true" id="detailTab-${key}-specs" aria-controls="detailPanel-${key}-specs" data-tab="specs">完整参数</button>
+        <button class="detail-tab" type="button" role="tab" aria-selected="false" id="detailTab-${key}-plans" aria-controls="detailPanel-${key}-plans" data-tab="plans">价格方案</button>
+        <button class="detail-tab" type="button" role="tab" aria-selected="false" id="detailTab-${key}-gallery" aria-controls="detailPanel-${key}-gallery" data-tab="gallery">相关素材</button>
       </div>
       <div class="detail-body">
-        <section class="detail-panel is-active" data-panel="specs" role="tabpanel">
+        <section class="detail-panel is-active" data-panel="specs" role="tabpanel" id="detailPanel-${key}-specs" aria-labelledby="detailTab-${key}-specs">
           <div class="detail-section-title">
             <h4>完整参数</h4>
             <p>整理自官方公开页面，具体版本与规格以官方最新信息为准。</p>
           </div>
           <dl class="detail-spec-list">${specsHtml}</dl>
         </section>
-        <section class="detail-panel" data-panel="plans" role="tabpanel">
+        <section class="detail-panel" data-panel="plans" role="tabpanel" id="detailPanel-${key}-plans" aria-labelledby="detailTab-${key}-plans">
           <div class="detail-section-title">
             <h4>价格方案</h4>
             <p>价格与可选配置可能随活动更新，请以下单时官方页面为准。</p>
           </div>
           <div class="detail-plan-grid">${plansHtml}</div>
         </section>
-        <section class="detail-panel" data-panel="gallery" role="tabpanel">
+        <section class="detail-panel" data-panel="gallery" role="tabpanel" id="detailPanel-${key}-gallery" aria-labelledby="detailTab-${key}-gallery">
           <div class="detail-section-title">
             <h4>相关素材</h4>
             <p>从本站 200 张官方图库中筛选当前产品相关影像。</p>
@@ -280,17 +281,30 @@ function buildDetailDialog(key) {
     document.body.classList.remove("modal-open");
   });
 
-  dialog.querySelectorAll(".detail-tab").forEach((tab) => {
-    tab.addEventListener("click", () => {
-      dialog.querySelectorAll(".detail-tab").forEach((item) => {
-        item.classList.remove("is-active");
-        item.setAttribute("aria-selected", "false");
-      });
-      tab.classList.add("is-active");
-      tab.setAttribute("aria-selected", "true");
-      dialog.querySelectorAll(".detail-panel").forEach((panel) => {
-        panel.classList.toggle("is-active", panel.dataset.panel === tab.dataset.tab);
-      });
+  function activateDetailTab(tab) {
+    dialog.querySelectorAll(".detail-tab").forEach((item) => {
+      item.classList.remove("is-active");
+      item.setAttribute("aria-selected", "false");
+    });
+    tab.classList.add("is-active");
+    tab.setAttribute("aria-selected", "true");
+    dialog.querySelectorAll(".detail-panel").forEach((panel) => {
+      panel.classList.toggle("is-active", panel.dataset.panel === tab.dataset.tab);
+    });
+  }
+
+  dialog.querySelectorAll(".detail-tab").forEach((tab, index, tabs) => {
+    tab.addEventListener("click", () => activateDetailTab(tab));
+    tab.addEventListener("keydown", (event) => {
+      if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      let next = index;
+      if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+      if (event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === "Home") next = 0;
+      if (event.key === "End") next = tabs.length - 1;
+      activateDetailTab(tabs[next]);
+      tabs[next].focus();
     });
   });
 
@@ -307,7 +321,7 @@ function renderDetailGallery(key) {
   }
   holder.innerHTML = items.map((item) => `
     <figure class="detail-gallery-item">
-      <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.title)}" loading="lazy">
+      <img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.title)}" loading="lazy" decoding="async">
       <figcaption>${escapeHtml(item.title)}</figcaption>
     </figure>
   `).join("");
@@ -367,7 +381,7 @@ function renderProductCatalog(catalog) {
     const detailUrl = `product-view.html?product=${encodeURIComponent(product.id)}`;
     return `
       <article class="spec-card" data-product="${escapeHtml(product.id)}" data-brand="${escapeHtml(product.brand)}" data-name="${escapeHtml(product.name)}" data-search="${escapeHtml([product.name, product.brand, product.category, ...(product.specs || []).map((s) => `${s.label} ${s.value}`)].join(" "))}" data-tilt>
-        <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)} 官方产品图">
+        <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)} 官方产品图" loading="lazy" decoding="async">
         <div class="spec-content">
           <div class="spec-meta">
             <span class="brand-tag ${productBrandClass(product.brand)}">${escapeHtml(product.brand)}</span>
@@ -411,6 +425,13 @@ function applyHeroSearch() {
 
 function initHeroSearch() {
   if (!heroSearch || !specGrid) return;
+  document.addEventListener("keydown", (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+      event.preventDefault();
+      heroSearch.focus();
+      heroSearch.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  });
   heroSearch.addEventListener("input", () => {
     document.querySelectorAll("[data-brand-filter]").forEach((button) => button.classList.remove("is-active"));
     applyHeroSearch();
@@ -444,20 +465,38 @@ function initHeroSearch() {
   });
 }
 
+function useStaticSpecFallback() {
+  const template = document.getElementById("specFallbackTemplate");
+  if (!template) return;
+  const fragment = template.content.cloneNode(true);
+  fragment.querySelectorAll("img").forEach((img) => {
+    img.loading = "lazy";
+    img.decoding = "async";
+  });
+  specGrid.innerHTML = "";
+  specGrid.appendChild(fragment);
+  if (window.HVEFFECTS) {
+    window.HVEFFECTS.observeReveal(specGrid);
+    window.HVEFFECTS.initTilt(specGrid, ".spec-card");
+  }
+  if (window.lucide) lucide.createIcons();
+}
+
 async function initProductCatalog() {
   try {
-    const response = await fetch("assets/catalog.json", { cache: "no-store" });
+    const response = await fetch("assets/catalog.json");
     if (!response.ok) throw new Error("Catalog not found");
     const catalog = await response.json();
     renderProductCatalog(catalog);
   } catch (error) {
     console.warn("Product catalog unavailable, keeping static fallback.", error);
+    useStaticSpecFallback();
   }
 }
 
 async function initGallery() {
   try {
-    const response = await fetch("assets/gallery.json", { cache: "no-store" });
+    const response = await fetch("assets/gallery.json");
     if (!response.ok) throw new Error("Gallery not found");
     galleryData = await response.json();
   } catch (error) {

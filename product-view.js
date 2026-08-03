@@ -45,7 +45,7 @@ async function loadProduct() {
 
   let catalog = [];
   try {
-    const response = await fetch("assets/catalog.json", { cache: "no-store" });
+    const response = await fetch("assets/catalog.json");
     if (!response.ok) throw new Error("Catalog not found");
     catalog = await response.json();
   } catch (error) {
@@ -106,7 +106,7 @@ async function loadProduct() {
   }
   document.getElementById("productMaterialGrid").innerHTML = scenes.map((src, index) => `
     <figure>
-      <img src="${escapeHtml(src)}" alt="${escapeHtml(product.name)} 相关素材 ${index + 1}" loading="lazy">
+      <img src="${escapeHtml(src)}" alt="${escapeHtml(product.name)} 相关素材 ${index + 1}" loading="lazy" decoding="async">
       <figcaption>${index === 0 ? `${escapeHtml(product.name)} 主视觉` : `${escapeHtml(product.name)} 相关素材 ${index + 1}`}</figcaption>
     </figure>
   `).join("");
