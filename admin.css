@@ -745,3 +745,90 @@ textarea:focus {
     animation: none;
   }
 }
+
+/* Editorial archive theme */
+.admin-body {
+  background: #f1f3ef;
+}
+
+.admin-header {
+  border-bottom-color: var(--line);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.admin-badge {
+  background: var(--gold);
+  color: #101512;
+}
+
+.admin-panel,
+.admin-dialog,
+.admin-row,
+.admin-stats div,
+.admin-upload,
+.admin-spec-editor,
+input,
+select,
+textarea {
+  border-radius: 4px;
+}
+
+.admin-connect {
+  border: 0;
+  background: var(--dark);
+  color: #fff;
+}
+
+.admin-connect .eyebrow,
+.admin-connect-copy p:last-child,
+.admin-connect-form label span,
+.admin-connect-status {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.admin-connect h1,
+.admin-overview h2,
+.admin-dialog h2 {
+  font-family: "Bahnschrift", "DIN Alternate", "Arial Narrow", "Microsoft YaHei", "PingFang SC", sans-serif;
+  font-weight: 900;
+}
+
+.admin-connect-form input {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.admin-connect-form input::placeholder {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.admin-btn-primary {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: #101512;
+}
+
+.admin-btn-primary:hover {
+  border-color: #ff704f;
+  background: #ff704f;
+  color: #101512;
+}
+
+.admin-status.is-active {
+  background: #dcefe0;
+  color: #236a2f;
+}
+
+.admin-status.is-hidden {
+  background: #f7e4df;
+  color: #8c3b2c;
+}
+
+.admin-toast {
+  border-radius: 4px;
+}
+
+.admin-toast.is-error {
+  background: #9f3d2c;
+}
