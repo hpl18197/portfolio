@@ -321,18 +321,22 @@ function openDetail(key) {
   if (window.lucide) lucide.createIcons();
 }
 
+const productPages = {
+  dji: "product-dji.html",
+  xag: "product-xag.html",
+  insta: "product-insta.html"
+};
+
 document.querySelectorAll(".spec-card").forEach((card) => {
   card.addEventListener("click", (event) => {
-    if (event.target.closest(".spec-open")) return;
-    openDetail(card.dataset.product);
+    if (event.target.closest("a")) return;
+    const link = card.querySelector(".spec-open");
+    if (link) window.open(link.href, "_blank", "noopener");
   });
 });
 
-document.querySelectorAll(".spec-open").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    event.stopPropagation();
-    openDetail(button.dataset.product);
-  });
+document.querySelectorAll(".spec-open").forEach((link) => {
+  link.addEventListener("click", (event) => event.stopPropagation());
 });
 
 async function initGallery() {

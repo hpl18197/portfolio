@@ -1,0 +1,253 @@
+.product-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  min-height: 640px;
+  background: var(--dark);
+  color: #fff;
+}
+
+.product-hero-media {
+  position: relative;
+  min-height: 560px;
+  overflow: hidden;
+  background: #1b211c;
+}
+
+.product-hero-media img {
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  object-fit: cover;
+}
+
+.product-hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 56px;
+}
+
+.product-hero-copy h1 {
+  margin: 0;
+  font-size: 4.6rem;
+  line-height: 1.02;
+}
+
+.product-price {
+  margin: 24px 0 0;
+  color: var(--gold);
+  font-size: 1.7rem;
+  font-weight: 900;
+}
+
+.product-price span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.product-summary {
+  max-width: 620px;
+  margin: 26px 0 32px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 17px;
+}
+
+.product-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.product-section {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 92px 0;
+}
+
+.product-price-section {
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.product-materials-section {
+  background: #eef1eb;
+}
+
+.product-section-inner {
+  width: min(1120px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 92px 0;
+}
+
+.product-heading {
+  max-width: 780px;
+  margin-bottom: 40px;
+}
+
+.product-heading h2 {
+  margin: 0;
+  font-size: 3rem;
+  line-height: 1.08;
+}
+
+.product-heading p:last-child {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.product-spec-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 38px;
+  margin: 0;
+  padding: 0;
+}
+
+.product-spec-list div {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 18px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.product-spec-list dt {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.product-spec-list dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.product-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.product-plan {
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.product-plan span {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.product-plan strong {
+  display: block;
+  margin-top: 16px;
+  font-size: 1.55rem;
+}
+
+.product-plan p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.product-material-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.product-material-grid figure {
+  overflow: hidden;
+  margin: 0;
+  border-radius: var(--radius);
+  background: #d7ddd7;
+}
+
+.product-material-grid img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.product-material-grid figcaption {
+  padding: 12px 14px;
+  background: var(--paper);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.product-source {
+  margin: 28px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.product-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 34px;
+  font-weight: 900;
+}
+
+.product-back svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 900px) {
+  .product-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .product-hero-media,
+  .product-hero-media img {
+    min-height: 300px;
+  }
+
+  .product-hero-copy {
+    padding: 36px 24px 44px;
+  }
+
+  .product-hero-copy h1 {
+    font-size: 3.4rem;
+  }
+
+  .product-spec-list,
+  .product-plan-grid,
+  .product-material-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .product-section,
+  .product-section-inner {
+    width: min(100% - 32px, 1120px);
+    padding: 64px 0;
+  }
+
+  .product-heading h2 {
+    font-size: 2.3rem;
+  }
+
+  .product-hero-copy h1 {
+    font-size: 2.8rem;
+  }
+
+  .product-material-grid img {
+    height: 200px;
+  }
+}
